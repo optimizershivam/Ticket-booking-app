@@ -25,7 +25,7 @@ function App() {
   });
 
   const getSeats = () => {
-    axios.get(`http://localhost:8080/seats`)
+    axios.get(`https://live-ticket-booking.onrender.com/seats`)
       .then((res) => {
         setSeats(res.data)
         setLoading(false);
@@ -56,7 +56,7 @@ function App() {
 
     }
     setLoading(true)
-    axios.patch(`http://localhost:8080/seats/book`, { "seats": Number(count) })
+    axios.patch(`https://live-ticket-booking.onrender.com/seats/book`, { "seats": Number(count) })
       .then((res) => {
         setBooked(res.data);
         toast({
@@ -74,6 +74,7 @@ function App() {
           title: error.response.data.message,
           status: "error",
           position: "top",
+          duration: 3000,
           isClosable: true
         })
       });
@@ -82,12 +83,13 @@ function App() {
 
   const handleReset = () => {
     setBooked([])
-    axios.patch(`http://localhost:8080/seats/reset`)
+    axios.patch(`https://live-ticket-booking.onrender.com/seats/reset`)
       .then((res) => console.log(res),
       toast({
         title: "All seats are available for booking",
         status: "info",
         position: "top",
+        duration: 3000,
         isClosable: true
       })
       )
@@ -110,7 +112,7 @@ function App() {
   <Heading color={'white'}>VIRTUAL TICKET COUNTER</Heading>
  </Flex>
     <div style={{ display: "flex", justifyContent: "center", backgroundImage: "linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12)"}}>
-  <Flex w={"100%"} justifyContent={"space-around"} alignItems={"center"} gap={"30px"} flexDir={{ base: "column", md: "column", lg: "row" }} h={{ base: "auto", md: "100vh", lg: "100vh" }} mt={{ base:20, md:5, lg:5}}>
+  <Flex w={"100%"} justifyContent={"space-around"} alignItems={"center"} gap={"30px"} flexDir={{ base: "column", md: "column", lg: "row" }} h={{ base: "auto", md: "auto", lg: "100vh" }} mt={{ base:20, md:20, lg:5}}>
     <Grid w={{ base: "80%", md: "50%", lg: "30%" }} templateColumns={"repeat(7,1fr)"} bgColor={"white"} p={"10px"} borderRadius={"20px"} boxShadow={"rgb(85, 91, 255) 0px 0px 0px 3px, rgb(31, 193, 27) 0px 0px 0px 6px, rgb(255, 217, 19) 0px 0px 0px 9px, rgb(255, 156, 85) 0px 0px 0px 12px, rgb(255, 85, 85) 0px 0px 0px 15px;"}>
       {seats.length > 0 && seats?.map((e) =>
         <Box key={e._id} align="center">
